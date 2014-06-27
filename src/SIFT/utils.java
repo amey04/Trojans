@@ -1,17 +1,35 @@
 package SIFT;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import org.opencv.core.Core;
-import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.highgui.Highgui;
 import org.opencv.imgproc.Imgproc;
 
 public  class utils {
 	
-	
+	public static ArrayList<Mat> readManyImages(String filename) throws IOException{
+		
+		ArrayList<Mat> names = new ArrayList<Mat>();
+		String inputImagePath = new java.io.File( "." ).getCanonicalPath() + "\\" + "source\\";
+		BufferedReader br = new BufferedReader(new FileReader(filename));
+		String line;
+		while ((line = br.readLine()) != null) {
+			Mat readImage = readImage(inputImagePath + line);
+			names.add(readImage);
+		}
+		br.close();
+		return names;
+		
+	}
+
 	public static Mat readImage(String imageName){
 		Mat image = Highgui.imread(imageName);
 		return image;
